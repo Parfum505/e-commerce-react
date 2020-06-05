@@ -8,7 +8,7 @@ const ShopPage = (props) => {
     setCollections(SHOP_DATA);
   }, []);
   return (
-    <div className="shop-page">
+    <div className="pages shop-page">
       {collections.map(({ id, ...collectionProps }) => (
         <CollectionPreview key={id} {...collectionProps} />
       ))}
