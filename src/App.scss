@@ -1,0 +1,12 @@
+body {
+  font-family: "Open Sans Condensed";
+  padding: 20px 5%;
+
+  @media all and (min-width: 768px) {
+    padding: 20px 80px;
+  }
+  .App {
+    margin: auto;
+    max-width: 1200px;
+  }
+}

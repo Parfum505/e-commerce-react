@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "./directory.scss";
-import { sectionsData } from "./directory-data";
+import SECTIONS_DATA from "./directory-data";
 import MenuItem from "../menu-item/menu-item";
 
 const Directory = (props) => {
   const [sections, setSections] = useState([]);
   useEffect(() => {
-    setSections(sectionsData);
+    setSections(SECTIONS_DATA);
   }, []);
   return (
     <div className="directory-menu">
