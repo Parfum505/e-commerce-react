@@ -1,5 +1,6 @@
 $sub-color: grey;
 $main-color: black;
+$error-color: red;
 
 @mixin shrinkLabel {
   top: -14px;
@@ -24,6 +25,10 @@ $main-color: black;
     border-bottom: 1px solid $sub-color;
     margin: 25px 0;
 
+    &.error {
+      border-bottom-color: $error-color;
+    }
+
     &:focus {
       outline: none;
     }
@@ -37,6 +42,13 @@ $main-color: black;
     letter-spacing: 0.3em;
   }
 
+  .form-input-error {
+    font-size: 11px;
+    position: absolute;
+    color: $error-color;
+    left: 5px;
+    bottom: -20px;
+  }
   .form-input-label {
     color: $sub-color;
     font-size: 16px;

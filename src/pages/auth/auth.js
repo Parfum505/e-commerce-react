@@ -1,37 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import "./auth.scss";
 import SignIn from "../../components/sign-in/sign-in";
-
-const signInInitData = {
-  email: {
-    type: "email",
-    name: "email",
-    value: "",
-    label: "Email",
-    valid: true,
-  },
-  password: {
-    type: "password",
-    name: "password",
-    value: "",
-    label: "Password",
-    isValid: true,
-  },
-};
+import { signInFormInitData } from "../../data/data";
+import { validateForm } from "../../utility/utility";
 
 const Auth = () => {
-  const [signInForm, setSignInForm] = useState(signInInitData);
-  // useEffect(() => {
-  //   setSignIn(signInData);
-  // }, []);
-
   return (
     <div className="pages">
-      <SignIn
-        initFormData={signInInitData}
-        formData={signInForm}
-        setFormData={setSignInForm}
-      />
+      <SignIn initFormData={signInFormInitData} validateForm={validateForm} />
     </div>
   );
 };
