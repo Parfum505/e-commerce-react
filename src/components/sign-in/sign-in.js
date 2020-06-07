@@ -3,6 +3,7 @@ import "./sign-in.scss";
 import useForm from "../../hooks/useForm";
 import FormInput from "../form-input/form-input";
 import FormButton from "../form-button/form-button";
+import { singInWithGoogle } from "../../firebase/firebase.utils";
 
 const SignIn = ({ initFormData, validateForm }) => {
   const login = (values) => {
@@ -48,6 +49,9 @@ const SignIn = ({ initFormData, validateForm }) => {
           handleClick={handleClick}
         >
           SIGN IN
+        </FormButton>
+        <FormButton type="submit" handleClick={singInWithGoogle}>
+          SIGN IN WITH GOOGLE
         </FormButton>
       </form>
     </div>
