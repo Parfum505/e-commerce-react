@@ -13,6 +13,7 @@ const FormButton = ({ children, handleClick, ...otherProps }) => {
     <button
       className={classesArr.join(" ")}
       onClick={handleClick}
+      disabled={otherProps.disabled}
       {...otherProps}
     >
       {children}

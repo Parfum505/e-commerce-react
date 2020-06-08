@@ -1,15 +1,12 @@
 import { useState, useEffect } from "react";
 
-const useForm = (formInitData = {}, validateForm, submitCallback = null) => {
+const useForm = (formInitData = {}, validateForm, submitCallback) => {
   const [values, setValues] = useState(formInitData);
   const [errors, setErrors] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   // console.log(errors, values);
   useEffect(() => {
     if (Object.keys(errors).length === 0 && isSubmitting) {
-      console.log("ok");
-      setIsLoading(true);
       submitCallback(values);
     }
   }, [errors, isSubmitting, submitCallback, values]);
@@ -25,7 +22,13 @@ const useForm = (formInitData = {}, validateForm, submitCallback = null) => {
     const newInput = { ...values[name], value };
     setValues((values) => ({ ...values, [name]: { ...newInput } }));
   };
-  return { errors, values, isLoading, handleSubmit, handleInputChange };
+  return {
+    errors,
+    values,
+    setErrors,
+    handleSubmit,
+    handleInputChange,
+  };
 };
 
 export default useForm;

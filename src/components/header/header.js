@@ -3,11 +3,11 @@ import { Link, NavLink } from "react-router-dom";
 import "./header.scss";
 import { ReactComponent as Logo } from "../../assets/images/crown.svg";
 import { auth } from "../../firebase/firebase.utils";
-import { CurrentUserContext } from "../../App";
+import { authContext } from "../../App";
 
 const Header = () => {
   const [fixed, setFixed] = useState("");
-  const [currentUser] = useContext(CurrentUserContext);
+  const { currentUser, setCurrentUser } = useContext(authContext);
   useEffect(() => {
     const handleOnScroll = () => {
       window.scrollY > 200 ? setFixed("fixed") : setFixed("");
@@ -17,6 +17,11 @@ const Header = () => {
       window.removeEventListener("scroll", handleOnScroll, true);
     };
   }, []);
+
+  const handleSignOut = () => {
+    auth.signOut();
+    setCurrentUser(null);
+  };
 
   return (
     <header className={`header ${fixed}`}>
@@ -32,7 +37,7 @@ const Header = () => {
             CONTACT
           </NavLink>
           {currentUser ? (
-            <div className="option" onClick={() => auth.signOut()}>
+            <div className="option" onClick={handleSignOut}>
               SIGN OUT
             </div>
           ) : (
