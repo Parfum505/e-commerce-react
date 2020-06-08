@@ -1,13 +1,26 @@
-import React from "react";
+import React, { useState, useEffect, createContext } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import "./App.scss";
 import HomePage from "./pages/home/home";
 import ShopPage from "./pages/shop/shop";
 import Auth from "./pages/auth/auth";
 import Header from "./components/header/header";
+import { auth } from "./firebase/firebase.utils";
 
-function App() {
+export const CurrentUserContext = createContext([null]);
+
+const App = () => {
+  const [currentUser, setCurrentUser] = useState(null);
+
+  useEffect(() => {
+    let unsubscribeFromAuth = auth.onAuthStateChanged((user) =>
+      setCurrentUser(user)
+    );
+    return () => unsubscribeFromAuth();
+  }, []);
+  console.log(currentUser);
   return (
+    <CurrentUserContext.Provider value={[currentUser]}>
     <div className="App">
       <Header />
       <Switch>
@@ -17,7 +30,8 @@ function App() {
         <Redirect to="/" />
       </Switch>
     </div>
+    </CurrentUserContext.Provider>
   );
-}
+};
 
 export default App;

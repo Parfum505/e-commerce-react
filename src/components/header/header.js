@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import "./header.scss";
 import { ReactComponent as Logo } from "../../assets/images/crown.svg";
+import { auth } from "../../firebase/firebase.utils";
+import { CurrentUserContext } from "../../App";
 
 const Header = () => {
   const [fixed, setFixed] = useState("");
+  const [currentUser] = useContext(CurrentUserContext);
   useEffect(() => {
     const handleOnScroll = () => {
       window.scrollY > 200 ? setFixed("fixed") : setFixed("");
@@ -28,9 +31,15 @@ const Header = () => {
           <NavLink className="option" to="/contact">
             CONTACT
           </NavLink>
-          <NavLink className="option" to="/sign-in">
-            SIGN IN
-          </NavLink>
+          {currentUser ? (
+            <div className="option" onClick={() => auth.signOut()}>
+              SIGN OUT
+            </div>
+          ) : (
+            <NavLink className="option" to="/sign-in">
+              SIGN IN
+            </NavLink>
+          )}
         </div>
       </nav>
     </header>
