@@ -1,0 +1,12 @@
+.sign-form {
+  width: 100%;
+  max-width: 380px;
+  margin: auto;
+
+  .buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 0 -5px;
+  }
+}

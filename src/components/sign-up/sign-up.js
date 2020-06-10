@@ -1,23 +1,31 @@
 import React, { useContext } from "react";
 import { Redirect } from "react-router-dom";
-import "./sign-in.scss";
+import "./sign-up.scss";
 import useForm from "../../hooks/useForm";
 import FormInput from "../form-input/form-input";
 import FormButton from "../form-button/form-button";
-import { singInWithGoogle } from "../../firebase/firebase.utils";
 import { authContext } from "../../App";
+import { auth, creatUserProfileDocument } from "../../firebase/firebase.utils";
 
-const SignIn = ({ initFormData, validateForm }) => {
-  const { currentUser, setCurrentUser, loading, setLoading } = useContext(
-    authContext
-  );
+const SignUp = ({ initFormData, validateForm }) => {
+  const { currentUser, loading, setLoading } = useContext(authContext);
 
-  const loginHandler = async (values) => {
+  const singUpHandler = async (values) => {
     setLoading(true);
+    const { email, password, displayName } = values;
+    console.log(email.value, displayName.value);
     try {
-      console.log("Sign in successful");
-      setCurrentUser({ displayName: "Pavel", email: values.email.value });
+      const [user] = await auth.createUserWithEmailAndPassword(
+        email.value,
+        password.value
+      );
+      console.log(user, displayName);
+      await creatUserProfileDocument(user, {
+        displayName: displayName.value,
+      });
+      console.log("Sign up successful");
     } catch (error) {
+      console.log(error, error.message);
       setErrors({ formError: error });
     } finally {
       setLoading(false);
@@ -29,7 +37,7 @@ const SignIn = ({ initFormData, validateForm }) => {
     setErrors,
     handleSubmit,
     handleInputChange,
-  } = useForm(initFormData, validateForm, loginHandler);
+  } = useForm(initFormData, validateForm, singUpHandler);
 
   const handleClickSubmit = (e) => {
     e.preventDefault();
@@ -37,19 +45,12 @@ const SignIn = ({ initFormData, validateForm }) => {
       handleSubmit();
     }
   };
-  const handleSingInWithGoogle = (e) => {
-    e.preventDefault();
-    if (!loading) {
-      setLoading(true);
-      singInWithGoogle();
-    }
-  };
 
   return (
-    <div className="sign-in  sign-form">
+    <div className="sign-up sign-form">
       {currentUser ? <Redirect to="/" /> : null}
-      <h2>I already have an account</h2>
-      <p>Sign in with your email end password.</p>
+      <h2>I do not have an account</h2>
+      <p>Sign up with your email end password.</p>
 
       <form action="" onSubmit={(e) => e.preventDefault()} noValidate>
         {Object.keys(values).map((name) => {
@@ -72,21 +73,13 @@ const SignIn = ({ initFormData, validateForm }) => {
             disabled={loading}
             handleClick={handleClickSubmit}
           >
-            SIGN IN
-          </FormButton>
-          <FormButton
-            type="submit"
-            disabled={loading}
-            handleClick={handleSingInWithGoogle}
-            classes={["google-sign-in"]}
-          >
-            SIGN IN WITH GOOGLE
+            SIGN UP
           </FormButton>
         </div>
       </form>
-      {errors.formError ? <p>error.formError</p> : null}
+      {errors.formError ? <p>{errors.formError.message}</p> : null}
     </div>
   );
 };
 
-export default SignIn;
+export default SignUp;

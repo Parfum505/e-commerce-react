@@ -11,7 +11,7 @@ export const authContext = createContext({});
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState(null);
-  const [tryToSignIn, setTryToSignIn] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     let unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
@@ -24,7 +24,7 @@ const App = () => {
           });
         });
       } else {
-        setCurrentUser(userAuth);
+        setCurrentUser(null);
       }
     });
     return () => unsubscribeFromAuth();
@@ -32,13 +32,13 @@ const App = () => {
 
   useEffect(() => {
     if (currentUser) {
-      setTryToSignIn(false);
+      setLoading(false);
     }
   }, [currentUser]);
 
   return (
     <authContext.Provider
-      value={{ currentUser, setCurrentUser, tryToSignIn, setTryToSignIn }}
+      value={{ currentUser, setCurrentUser, loading, setLoading }}
     >
       <div className="App">
         <Header />
