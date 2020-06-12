@@ -1,24 +1,23 @@
 import React, { useContext } from "react";
 import { Redirect } from "react-router-dom";
+import { auth, signInWithGoogle } from "../../firebase/firebase.utils";
+import { authContext } from "../../App";
 import "./sign-in.scss";
 import useForm from "../../hooks/useForm";
 import FormInput from "../form-input/form-input";
 import FormButton from "../form-button/form-button";
-import { singInWithGoogle } from "../../firebase/firebase.utils";
-import { authContext } from "../../App";
+import ErrorMessage from "../error-message/error-message";
 
 const SignIn = ({ initFormData, validateForm }) => {
-  const { currentUser, setCurrentUser, loading, setLoading } = useContext(
-    authContext
-  );
+  const { currentUser, loading, setLoading } = useContext(authContext);
 
-  const loginHandler = async (values) => {
+  const signInHandler = async (values) => {
     setLoading(true);
+    const { email, password } = values;
     try {
-      console.log("Sign in successful");
-      setCurrentUser({ displayName: "Pavel", email: values.email.value });
+      await auth.signInWithEmailAndPassword(email.value, password.value);
     } catch (error) {
-      setErrors({ formError: error });
+      setErrors({ formError: error.message });
     } finally {
       setLoading(false);
     }
@@ -29,7 +28,7 @@ const SignIn = ({ initFormData, validateForm }) => {
     setErrors,
     handleSubmit,
     handleInputChange,
-  } = useForm(initFormData, validateForm, loginHandler);
+  } = useForm(initFormData, validateForm, signInHandler);
 
   const handleClickSubmit = (e) => {
     e.preventDefault();
@@ -37,19 +36,19 @@ const SignIn = ({ initFormData, validateForm }) => {
       handleSubmit();
     }
   };
-  const handleSingInWithGoogle = (e) => {
+  const handleSignInWithGoogle = (e) => {
     e.preventDefault();
     if (!loading) {
       setLoading(true);
-      singInWithGoogle();
+      signInWithGoogle();
     }
   };
 
   return (
     <div className="sign-in  sign-form">
       {currentUser ? <Redirect to="/" /> : null}
-      <h2>I already have an account</h2>
-      <p>Sign in with your email end password.</p>
+      <h2 className="title">I already have an account</h2>
+      <p className="subtitle">Sign in with your email end password.</p>
 
       <form action="" onSubmit={(e) => e.preventDefault()} noValidate>
         {Object.keys(values).map((name) => {
@@ -77,14 +76,14 @@ const SignIn = ({ initFormData, validateForm }) => {
           <FormButton
             type="submit"
             disabled={loading}
-            handleClick={handleSingInWithGoogle}
+            handleClick={handleSignInWithGoogle}
             classes={["google-sign-in"]}
           >
             SIGN IN WITH GOOGLE
           </FormButton>
         </div>
       </form>
-      {errors.formError ? <p>error.formError</p> : null}
+      <ErrorMessage message={errors.formError || ""} />
     </div>
   );
 };

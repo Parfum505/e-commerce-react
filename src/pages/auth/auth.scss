@@ -1,12 +1,36 @@
-.sign-form {
-  width: 100%;
-  max-width: 380px;
-  margin: auto;
+.auth-page {
+  .sign-form {
+    width: 100%;
+    max-width: 380px;
+    margin: auto;
+    .title,
+    .subtitle {
+      text-align: center;
+    }
 
-  .buttons {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    margin: 0 -5px;
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin: 0 -5px;
+    }
+  }
+  .switch-signin-signup-button {
+    display: block;
+    margin: 1rem auto;
+    color: #4285f4;
+    border: none;
+    background-color: transparent;
+    &:hover,
+    &:active,
+    &:focus {
+      background-color: transparent;
+      color: #4285f4;
+      border: none;
+      outline: none;
+    }
+    .dissabled {
+      color: #a5a3a3;
+    }
   }
 }

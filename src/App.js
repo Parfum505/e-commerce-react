@@ -30,12 +30,6 @@ const App = () => {
     return () => unsubscribeFromAuth();
   }, []);
 
-  useEffect(() => {
-    if (currentUser) {
-      setLoading(false);
-    }
-  }, [currentUser]);
-
   return (
     <authContext.Provider
       value={{ currentUser, setCurrentUser, loading, setLoading }}

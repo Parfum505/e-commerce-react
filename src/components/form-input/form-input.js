@@ -1,5 +1,6 @@
 import React from "react";
 import "./form-input.scss";
+import ErrorMessage from "../error-message/error-message";
 
 const FormInput = ({ handleChange, error, label, ...otherProps }) => {
   return (
@@ -16,7 +17,7 @@ const FormInput = ({ handleChange, error, label, ...otherProps }) => {
           {label}
         </label>
       ) : null}
-      {error ? <span className="form-input-error">{error}</span> : null}
+      <ErrorMessage message={error} />
     </div>
   );
 };

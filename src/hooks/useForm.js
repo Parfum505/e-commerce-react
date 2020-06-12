@@ -4,9 +4,10 @@ const useForm = (formInitData = {}, validateForm, submitCallback) => {
   const [values, setValues] = useState(formInitData);
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  // console.log(errors, values);
+
   useEffect(() => {
     if (Object.keys(errors).length === 0 && isSubmitting) {
+      setIsSubmitting(false);
       submitCallback(values);
     }
   }, [errors, isSubmitting, submitCallback, values]);

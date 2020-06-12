@@ -6,6 +6,7 @@ import FormInput from "../form-input/form-input";
 import FormButton from "../form-button/form-button";
 import { authContext } from "../../App";
 import { auth, creatUserProfileDocument } from "../../firebase/firebase.utils";
+import ErrorMessage from "../error-message/error-message";
 
 const SignUp = ({ initFormData, validateForm }) => {
   const { currentUser, loading, setLoading } = useContext(authContext);
@@ -13,20 +14,16 @@ const SignUp = ({ initFormData, validateForm }) => {
   const singUpHandler = async (values) => {
     setLoading(true);
     const { email, password, displayName } = values;
-    console.log(email.value, displayName.value);
     try {
-      const [user] = await auth.createUserWithEmailAndPassword(
+      const { user } = await auth.createUserWithEmailAndPassword(
         email.value,
         password.value
       );
-      console.log(user, displayName);
       await creatUserProfileDocument(user, {
         displayName: displayName.value,
       });
-      console.log("Sign up successful");
     } catch (error) {
-      console.log(error, error.message);
-      setErrors({ formError: error });
+      setErrors({ formError: error.message });
     } finally {
       setLoading(false);
     }
@@ -49,8 +46,8 @@ const SignUp = ({ initFormData, validateForm }) => {
   return (
     <div className="sign-up sign-form">
       {currentUser ? <Redirect to="/" /> : null}
-      <h2>I do not have an account</h2>
-      <p>Sign up with your email end password.</p>
+      <h2 className="title">I do not have an account</h2>
+      <p className="subtitle">Sign up with your email end password.</p>
 
       <form action="" onSubmit={(e) => e.preventDefault()} noValidate>
         {Object.keys(values).map((name) => {
@@ -77,7 +74,7 @@ const SignUp = ({ initFormData, validateForm }) => {
           </FormButton>
         </div>
       </form>
-      {errors.formError ? <p>{errors.formError.message}</p> : null}
+      <ErrorMessage message={errors.formError || ""} />
     </div>
   );
 };

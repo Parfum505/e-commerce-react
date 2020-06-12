@@ -42,10 +42,9 @@ $error-color: red;
     letter-spacing: 0.3em;
   }
 
-  .form-input-error {
+  .error-message {
     font-size: 11px;
     position: absolute;
-    color: $error-color;
     left: 5px;
     bottom: -20px;
   }
