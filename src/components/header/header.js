@@ -1,13 +1,13 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
 import "./header.scss";
 import { ReactComponent as Logo } from "../../assets/images/crown.svg";
 import { auth } from "../../firebase/firebase.utils";
-import { authContext } from "../../App";
 
-const Header = () => {
+const Header = (props) => {
   const [fixed, setFixed] = useState("");
-  const { currentUser, setCurrentUser } = useContext(authContext);
+
   useEffect(() => {
     const handleOnScroll = () => {
       window.scrollY > 200 ? setFixed("fixed") : setFixed("");
@@ -20,7 +20,7 @@ const Header = () => {
 
   const handleSignOut = () => {
     auth.signOut();
-    setCurrentUser(null);
+    // props.signOutHandler();
   };
 
   return (
@@ -36,7 +36,7 @@ const Header = () => {
           <NavLink className="option" to="/contact">
             CONTACT
           </NavLink>
-          {currentUser ? (
+          {props.currentUser ? (
             <div className="option" onClick={handleSignOut}>
               SIGN OUT
             </div>
@@ -51,4 +51,10 @@ const Header = () => {
   );
 };
 
-export default Header;
+const mapStateToProps = (state) => ({
+  currentUser: state.user.currentUser,
+});
+// const mapDispatchToProps = (dispatch) => ({
+//   signOutHandler: () => dispatch(signOut()),
+// });
+export default connect(mapStateToProps)(Header);

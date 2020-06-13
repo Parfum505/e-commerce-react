@@ -7,10 +7,10 @@ import { signInFormInitData, signUpFormInitData } from "../../data/data";
 import { validateForm } from "../../utility/utility";
 
 const Auth = () => {
-  const [isSingUp, setIsSingUp] = useState(false);
+  const [showSingUp, setShowSingUp] = useState(false);
   const switchModeHandler = (event) => {
     event.preventDefault();
-    setIsSingUp(!isSingUp);
+    setShowSingUp(!showSingUp);
   };
   return (
     <div className="pages auth-page">
@@ -18,7 +18,7 @@ const Auth = () => {
         handleClick={switchModeHandler}
         classes={["switch-signin-signup-button"]}
       >
-        {isSingUp ? (
+        {showSingUp ? (
           <div>
             <span className="dissabled">SING&nbsp;IN</span>
             &nbsp;/&nbsp;SING&nbsp;UP
@@ -30,7 +30,7 @@ const Auth = () => {
           </div>
         )}
       </FormButton>
-      {isSingUp ? (
+      {showSingUp ? (
         <SignUp initFormData={signUpFormInitData} validateForm={validateForm} />
       ) : (
         <SignIn initFormData={signInFormInitData} validateForm={validateForm} />

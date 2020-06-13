@@ -1,50 +1,47 @@
-import React, { useState, useEffect, createContext } from "react";
+import React, { useEffect } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
 import "./App.scss";
 import HomePage from "./pages/home/home";
 import ShopPage from "./pages/shop/shop";
 import Auth from "./pages/auth/auth";
 import Header from "./components/header/header";
 import { auth, creatUserProfileDocument } from "./firebase/firebase.utils";
+import { authSuccess, signOut } from "./redux/user/user-actions";
 
-export const authContext = createContext({});
-
-const App = () => {
-  const [currentUser, setCurrentUser] = useState(null);
-  const [loading, setLoading] = useState(false);
-
+const App = (props) => {
   useEffect(() => {
     let unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
       if (userAuth) {
         const userRef = await creatUserProfileDocument(userAuth);
         userRef.onSnapshot((snapShot) => {
-          setCurrentUser({
+          props.signInHandler({
             id: snapShot.id,
             ...snapShot.data(),
           });
         });
       } else {
-        setCurrentUser(null);
+        props.signOutHandler();
       }
     });
     return () => unsubscribeFromAuth();
-  }, []);
+  }, [props]);
 
   return (
-    <authContext.Provider
-      value={{ currentUser, setCurrentUser, loading, setLoading }}
-    >
-      <div className="App">
-        <Header />
-        <Switch>
-          <Route path="/" exact component={HomePage}></Route>
-          <Route path="/shop" exact component={ShopPage}></Route>
-          <Route path="/sign-in" exact component={Auth}></Route>
-          <Redirect to="/" />
-        </Switch>
-      </div>
-    </authContext.Provider>
+    <div className="App">
+      <Header />
+      <Switch>
+        <Route path="/" exact component={HomePage}></Route>
+        <Route path="/shop" exact component={ShopPage}></Route>
+        <Route path="/sign-in" exact component={Auth}></Route>
+        <Redirect to="/" />
+      </Switch>
+    </div>
   );
 };
 
-export default App;
+const mapDispatchToProps = (dispatch) => ({
+  signInHandler: (user) => dispatch(authSuccess(user)),
+  signOutHandler: () => dispatch(signOut()),
+});
+export default connect(null, mapDispatchToProps)(App);

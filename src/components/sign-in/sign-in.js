@@ -1,31 +1,28 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Redirect } from "react-router-dom";
+import { connect } from "react-redux";
 import { auth, signInWithGoogle } from "../../firebase/firebase.utils";
-import { authContext } from "../../App";
 import "./sign-in.scss";
 import useForm from "../../hooks/useForm";
 import FormInput from "../form-input/form-input";
 import FormButton from "../form-button/form-button";
 import ErrorMessage from "../error-message/error-message";
+import { authStart, authError } from "../../redux/user/user-actions";
 
-const SignIn = ({ initFormData, validateForm }) => {
-  const { currentUser, loading, setLoading } = useContext(authContext);
+const SignIn = ({ initFormData, validateForm, currentUser, authStartHandler,authErrorHandler, loading, authErrors }) => {
 
   const signInHandler = async (values) => {
-    setLoading(true);
+    authStartHandler();
     const { email, password } = values;
     try {
       await auth.signInWithEmailAndPassword(email.value, password.value);
     } catch (error) {
-      setErrors({ formError: error.message });
-    } finally {
-      setLoading(false);
+      authErrorHandler(error.message);
     }
   };
   const {
     errors,
     values,
-    setErrors,
     handleSubmit,
     handleInputChange,
   } = useForm(initFormData, validateForm, signInHandler);
@@ -39,7 +36,7 @@ const SignIn = ({ initFormData, validateForm }) => {
   const handleSignInWithGoogle = (e) => {
     e.preventDefault();
     if (!loading) {
-      setLoading(true);
+      authStartHandler();
       signInWithGoogle();
     }
   };
@@ -83,9 +80,17 @@ const SignIn = ({ initFormData, validateForm }) => {
           </FormButton>
         </div>
       </form>
-      <ErrorMessage message={errors.formError || ""} />
+      <ErrorMessage message={authErrors || ""} />
     </div>
   );
 };
-
-export default SignIn;
+const mapStateToProps = (state) => ({
+  currentUser: state.user.currentUser,
+  loading: state.user.loading,
+  authErrors: state.user.errors,
+});
+const mapDispatchToProps = (dispatch) => ({
+  authStartHandler: () => dispatch(authStart()),
+  authErrorHandler: (error) => dispatch(authError(error)),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

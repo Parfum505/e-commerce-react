@@ -1,18 +1,25 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Redirect } from "react-router-dom";
+import { connect } from "react-redux";
 import "./sign-up.scss";
 import useForm from "../../hooks/useForm";
 import FormInput from "../form-input/form-input";
 import FormButton from "../form-button/form-button";
-import { authContext } from "../../App";
 import { auth, creatUserProfileDocument } from "../../firebase/firebase.utils";
 import ErrorMessage from "../error-message/error-message";
+import { authStart, authError } from "../../redux/user/user-actions";
 
-const SignUp = ({ initFormData, validateForm }) => {
-  const { currentUser, loading, setLoading } = useContext(authContext);
-
+const SignUp = ({
+  initFormData,
+  validateForm,
+  currentUser,
+  authStartHandler,
+  authErrorHandler,
+  loading,
+  authErrors,
+}) => {
   const singUpHandler = async (values) => {
-    setLoading(true);
+    authStartHandler();
     const { email, password, displayName } = values;
     try {
       const { user } = await auth.createUserWithEmailAndPassword(
@@ -23,18 +30,14 @@ const SignUp = ({ initFormData, validateForm }) => {
         displayName: displayName.value,
       });
     } catch (error) {
-      setErrors({ formError: error.message });
-    } finally {
-      setLoading(false);
+      authErrorHandler(error.message);
     }
   };
-  const {
-    errors,
-    values,
-    setErrors,
-    handleSubmit,
-    handleInputChange,
-  } = useForm(initFormData, validateForm, singUpHandler);
+  const { errors, values, handleSubmit, handleInputChange } = useForm(
+    initFormData,
+    validateForm,
+    singUpHandler
+  );
 
   const handleClickSubmit = (e) => {
     e.preventDefault();
@@ -74,9 +77,17 @@ const SignUp = ({ initFormData, validateForm }) => {
           </FormButton>
         </div>
       </form>
-      <ErrorMessage message={errors.formError || ""} />
+      <ErrorMessage message={authErrors || ""} />
     </div>
   );
 };
-
-export default SignUp;
+const mapStateToProps = (state) => ({
+  currentUser: state.user.currentUser,
+  loading: state.user.loading,
+  authErrors: state.user.errors,
+});
+const mapDispatchToProps = (dispatch) => ({
+  authStartHandler: () => dispatch(authStart()),
+  authErrorHandler: (error) => dispatch(authError(error)),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
