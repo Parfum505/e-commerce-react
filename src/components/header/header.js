@@ -4,6 +4,8 @@ import { Link, NavLink } from "react-router-dom";
 import "./header.scss";
 import { ReactComponent as Logo } from "../../assets/images/crown.svg";
 import { auth } from "../../firebase/firebase.utils";
+import CartIcon from "../cart-icon/cart-icon";
+import CartDropdown from "../cart-dropdown/cart-dropdown";
 
 const Header = (props) => {
   const [fixed, setFixed] = useState("");
@@ -20,7 +22,6 @@ const Header = (props) => {
 
   const handleSignOut = () => {
     auth.signOut();
-    // props.signOutHandler();
   };
 
   return (
@@ -45,7 +46,9 @@ const Header = (props) => {
               SIGN IN
             </NavLink>
           )}
+          <CartIcon />
         </div>
+        <CartDropdown />
       </nav>
     </header>
   );
