@@ -48,7 +48,7 @@ const Header = (props) => {
           )}
           <CartIcon />
         </div>
-        <CartDropdown />
+        {props.cartHidden ? null : <CartDropdown />}
       </nav>
     </header>
   );
@@ -56,6 +56,7 @@ const Header = (props) => {
 
 const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
+  cartHidden: state.cart.cartHidden,
 });
 // const mapDispatchToProps = (dispatch) => ({
 //   signOutHandler: () => dispatch(signOut()),
