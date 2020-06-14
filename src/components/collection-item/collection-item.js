@@ -1,6 +1,7 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import "./collection-item.scss";
+import FormButton from "../form-button/form-button";
 
 const CollectionItem = ({ id, imageUrl, name, price, history, match }) => {
   const clickHandler = () => {
@@ -18,6 +19,9 @@ const CollectionItem = ({ id, imageUrl, name, price, history, match }) => {
         <span className="name">{name}</span>
         <span className="price">{price}</span>
       </div>
+      <FormButton classes="inverted" handleClick={clickHandler}>
+        Add to cart
+      </FormButton>
     </div>
   );
 };
