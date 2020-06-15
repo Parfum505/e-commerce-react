@@ -6,6 +6,7 @@ import { ReactComponent as Logo } from "../../assets/images/crown.svg";
 import { auth } from "../../firebase/firebase.utils";
 import CartIcon from "../cart-icon/cart-icon";
 import CartDropdown from "../cart-dropdown/cart-dropdown";
+import fadeHOC from "../../hoc/cssTransition";
 
 const Header = (props) => {
   const [fixed, setFixed] = useState("");
@@ -23,7 +24,15 @@ const Header = (props) => {
   const handleSignOut = () => {
     auth.signOut();
   };
-
+  const transitionProps = {
+    in: !props.cartHidden,
+    timeout: { appear: 0, enter: 300, exit: 0 },
+    appear: true,
+    classNames: "display",
+    unmountOnExit: true,
+    exit: false,
+  };
+  const DropdownCart = fadeHOC(transitionProps)(CartDropdown);
   return (
     <header className={`header ${fixed}`}>
       <nav>
@@ -48,7 +57,7 @@ const Header = (props) => {
           )}
           <CartIcon />
         </div>
-        {props.cartHidden ? null : <CartDropdown />}
+        <DropdownCart />
       </nav>
     </header>
   );
