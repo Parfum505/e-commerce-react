@@ -1,14 +1,13 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 import "./collection-item.scss";
 import FormButton from "../form-button/form-button";
+import { addItem } from "../../redux/cart/cart-actions";
 
-const CollectionItem = ({ id, imageUrl, name, price, history, match }) => {
-  const clickHandler = () => {
-    // history.push(`${match.url}${linkUrl}`);
-  };
+const CollectionItem = ({ item, addItem }) => {
+  const { imageUrl, name, price } = item;
   return (
-    <div className="collection-item" onClick={clickHandler}>
+    <div className="collection-item">
       <div
         className="image"
         style={{
@@ -19,11 +18,13 @@ const CollectionItem = ({ id, imageUrl, name, price, history, match }) => {
         <span className="name">{name}</span>
         <span className="price">{price}</span>
       </div>
-      <FormButton classes="inverted" handleClick={clickHandler}>
+      <FormButton classes="inverted" handleClick={(name) => addItem(item)}>
         Add to cart
       </FormButton>
     </div>
   );
 };
-
-export default withRouter(CollectionItem);
+const mapDispatchToProps = (dispatch) => ({
+  addItem: (item) => dispatch(addItem(item)),
+});
+export default connect(null, mapDispatchToProps)(CollectionItem);

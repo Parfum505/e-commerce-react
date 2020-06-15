@@ -38,3 +38,13 @@ export const validateForm = (values = {}) => {
   }
   return errors;
 };
+
+export const addItemToCart = (cartItems, itemToAdd) => {
+  const cartItem = cartItems.find((item) => item.id === itemToAdd.id);
+  if (cartItem) {
+    return cartItems.map((item) =>
+      item.id === itemToAdd.id ? { ...item, quantity: item.quantity + 1 } : item
+    );
+  }
+  return [...cartItems, { ...itemToAdd, quantity: 1 }];
+};

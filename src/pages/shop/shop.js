@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import SHOP_DATA from "./shop-data";
+import SHOP_DATA from "../../data/shop-data";
 import CollectionPreview from "../../components/collection-preview/collection-preview";
 
 const ShopPage = (props) => {
