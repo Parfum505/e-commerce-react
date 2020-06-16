@@ -7,13 +7,15 @@ import { auth } from "../../firebase/firebase.utils";
 import CartIcon from "../cart-icon/cart-icon";
 import CartDropdown from "../cart-dropdown/cart-dropdown";
 import fadeHOC from "../../hoc/cssTransition";
+import MenuBtnMobile from "./nav-mobile-btn/nav-mobile-btn";
 
 const Header = (props) => {
   const [fixed, setFixed] = useState("");
+  const [showMenu, setShowMenu] = useState(false);
 
   useEffect(() => {
     const handleOnScroll = () => {
-      window.scrollY > 200 ? setFixed("fixed") : setFixed("");
+      window.scrollY > 250 ? setFixed("fixed") : setFixed("");
     };
     window.addEventListener("scroll", handleOnScroll, true);
     return () => {
@@ -23,6 +25,9 @@ const Header = (props) => {
 
   const handleSignOut = () => {
     auth.signOut();
+  };
+  const toggleMobileMenu = () => {
+    setShowMenu((prevState) => !prevState);
   };
   const transitionProps = {
     in: !props.cartHidden,
@@ -39,7 +44,10 @@ const Header = (props) => {
         <Link to="/" className="logo-container">
           <Logo className="logo" />
         </Link>
-        <div className="options">
+        <div
+          className={`options ${showMenu ? "active" : ""}`}
+          onClick={toggleMobileMenu}
+        >
           <NavLink className="option" to="/shop">
             SHOP
           </NavLink>
@@ -55,8 +63,9 @@ const Header = (props) => {
               SIGN IN
             </NavLink>
           )}
-          <CartIcon />
         </div>
+        <MenuBtnMobile clicked={toggleMobileMenu} showMenu={showMenu} />
+        <CartIcon />
         <DropdownCart />
       </nav>
     </header>

@@ -1,12 +1,11 @@
 .header {
   width: 100%;
   background: white;
-  transition: box-shadow 0.5s ease-out;
   left: 0;
   top: 0;
   position: absolute;
   z-index: 100;
-
+  box-shadow: 0px 0 20px rgba(0, 0, 0, 0.2);
   nav {
     margin: auto;
     max-width: 1200px;
@@ -22,41 +21,69 @@
 
   &.fixed {
     position: fixed;
-    box-shadow: 0px 0 20px rgba(0, 0, 0, 0.3);
   }
 
   .logo-container {
     margin-right: auto;
   }
-
   .options {
-    height: 100%;
-    display: flex;
-    align-items: center;
+    display: none;
+    width: 100%;
+    position: absolute;
+    top: 76px;
+    left: 0;
+    flex-direction: column;
+    background-color: white;
+    border-top: 1px solid #a5a3a3;
+    overflow: hidden;
+    &.active {
+      display: flex;
+    }
     .option {
+      width: 100%;
       padding: 10px 15px;
       font-weight: bold;
       position: relative;
       color: #a5a3a3;
+      border-bottom: 1px solid #a5a3a3;
       cursor: pointer;
-      &:after {
-        content: "";
-        width: 0;
-        height: 2px;
-        position: absolute;
-        bottom: 5px;
-        left: 50%;
-        background-color: #bebebe;
-        transition: all 0.3s ease-out;
-        visibility: hidden;
-      }
+      text-align: center;
       &:hover,
       &.active {
         color: black;
+      }
+    }
+  }
+
+  @media all and (min-width: 481px) {
+    .options {
+      display: flex;
+      width: auto;
+      flex-direction: row;
+      align-items: center;
+      border: none;
+      position: static;
+      .option {
+        border: none;
+        width: auto;
         &:after {
-          left: 12%;
-          width: 76%;
-          visibility: visible;
+          content: "";
+          width: 0;
+          height: 2px;
+          position: absolute;
+          bottom: 5px;
+          left: 50%;
+          background-color: #bebebe;
+          transition: all 0.3s ease-out;
+          visibility: hidden;
+        }
+        &:hover,
+        &.active {
+          &:after {
+            left: 12%;
+            width: 76%;
+            visibility: visible;
+          }
         }
       }
     }
