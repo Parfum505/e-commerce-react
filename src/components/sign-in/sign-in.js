@@ -1,6 +1,7 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
 import { auth, signInWithGoogle } from "../../firebase/firebase.utils";
 import "./sign-in.scss";
 import useForm from "../../hooks/useForm";
@@ -8,9 +9,21 @@ import FormInput from "../form-input/form-input";
 import FormButton from "../form-button/form-button";
 import ErrorMessage from "../error-message/error-message";
 import { authStart, authError } from "../../redux/user/user-actions";
+import {
+  selectCurrentUser,
+  selectUserLoading,
+  selectUserErrors,
+} from "../../redux/user/user-selectors";
 
-const SignIn = ({ initFormData, validateForm, currentUser, authStartHandler,authErrorHandler, loading, authErrors }) => {
-
+const SignIn = ({
+  initFormData,
+  validateForm,
+  currentUser,
+  authStartHandler,
+  authErrorHandler,
+  loading,
+  authErrors,
+}) => {
   const signInHandler = async (values) => {
     authStartHandler();
     const { email, password } = values;
@@ -20,12 +33,11 @@ const SignIn = ({ initFormData, validateForm, currentUser, authStartHandler,auth
       authErrorHandler(error.message);
     }
   };
-  const {
-    errors,
-    values,
-    handleSubmit,
-    handleInputChange,
-  } = useForm(initFormData, validateForm, signInHandler);
+  const { errors, values, handleSubmit, handleInputChange } = useForm(
+    initFormData,
+    validateForm,
+    signInHandler
+  );
 
   const handleClickSubmit = (e) => {
     e.preventDefault();
@@ -84,10 +96,10 @@ const SignIn = ({ initFormData, validateForm, currentUser, authStartHandler,auth
     </div>
   );
 };
-const mapStateToProps = (state) => ({
-  currentUser: state.user.currentUser,
-  loading: state.user.loading,
-  authErrors: state.user.errors,
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser,
+  loading: selectUserLoading,
+  authErrors: selectUserErrors,
 });
 const mapDispatchToProps = (dispatch) => ({
   authStartHandler: () => dispatch(authStart()),

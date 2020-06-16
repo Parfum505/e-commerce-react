@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { connect } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
+import { createStructuredSelector } from "reselect";
 import "./header.scss";
 import { ReactComponent as Logo } from "../../assets/images/crown.svg";
 import { auth } from "../../firebase/firebase.utils";
@@ -8,6 +9,8 @@ import CartIcon from "../cart-icon/cart-icon";
 import CartDropdown from "../cart-dropdown/cart-dropdown";
 import fadeHOC from "../../hoc/cssTransition";
 import MenuBtnMobile from "./nav-mobile-btn/nav-mobile-btn";
+import { selectCurrentUser } from "../../redux/user/user-selectors";
+import { selectCartHidden } from "../../redux/cart/cart-selectors";
 
 const Header = (props) => {
   const [fixed, setFixed] = useState("");
@@ -26,9 +29,10 @@ const Header = (props) => {
   const handleSignOut = () => {
     auth.signOut();
   };
-  const toggleMobileMenu = () => {
+  const toggleMobileMenu = useCallback(() => {
     setShowMenu((prevState) => !prevState);
-  };
+  }, []);
+
   const transitionProps = {
     in: !props.cartHidden,
     timeout: { appear: 0, enter: 300, exit: 0 },
@@ -72,9 +76,9 @@ const Header = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  currentUser: state.user.currentUser,
-  cartHidden: state.cart.cartHidden,
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser,
+  cartHidden: selectCartHidden,
 });
 // const mapDispatchToProps = (dispatch) => ({
 //   signOutHandler: () => dispatch(signOut()),

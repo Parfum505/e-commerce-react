@@ -1,6 +1,7 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
 import "./sign-up.scss";
 import useForm from "../../hooks/useForm";
 import FormInput from "../form-input/form-input";
@@ -8,6 +9,11 @@ import FormButton from "../form-button/form-button";
 import { auth, creatUserProfileDocument } from "../../firebase/firebase.utils";
 import ErrorMessage from "../error-message/error-message";
 import { authStart, authError } from "../../redux/user/user-actions";
+import {
+  selectCurrentUser,
+  selectUserLoading,
+  selectUserErrors,
+} from "../../redux/user/user-selectors";
 
 const SignUp = ({
   initFormData,
@@ -81,10 +87,10 @@ const SignUp = ({
     </div>
   );
 };
-const mapStateToProps = (state) => ({
-  currentUser: state.user.currentUser,
-  loading: state.user.loading,
-  authErrors: state.user.errors,
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser,
+  loading: selectUserLoading,
+  authErrors: selectUserErrors,
 });
 const mapDispatchToProps = (dispatch) => ({
   authStartHandler: () => dispatch(authStart()),

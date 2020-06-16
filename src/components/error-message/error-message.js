@@ -9,4 +9,4 @@ const ErrorMessage = ({ message }) => {
   return errorMessage;
 };
 
-export default ErrorMessage;
+export default React.memo(ErrorMessage);
