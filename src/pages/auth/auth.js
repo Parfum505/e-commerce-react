@@ -3,7 +3,7 @@ import { TransitionGroup } from "react-transition-group";
 import "./auth.scss";
 import SignIn from "../../components/sign-in/sign-in";
 import SignUp from "../../components/sign-up/sign-up";
-import FormButton from "../../components/form-button/form-button";
+import FormButton from "../../components/form/form-button/form-button";
 import { signInFormInitData, signUpFormInitData } from "../../data/data";
 import { validateForm } from "../../utility/utility";
 import fadeHOC from "../../hoc/cssTransition";

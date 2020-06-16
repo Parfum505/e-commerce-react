@@ -1,9 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
-import FormButton from "../form-button/form-button";
+import FormButton from "../../form/form-button/form-button";
 import "./cart-dropdown.scss";
 import CartItem from "../cart-item/cart-item";
-import { selectCartItems } from "../../redux/cart/cart-selectors";
+import { selectCartItems } from "../../../redux/cart/cart-selectors";
 
 const CartDropdown = ({ cartItems }) => {
   return (

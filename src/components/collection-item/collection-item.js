@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import "./collection-item.scss";
-import FormButton from "../form-button/form-button";
+import FormButton from "../form/form-button/form-button";
 import { addItem } from "../../redux/cart/cart-actions";
 
 const CollectionItem = ({ item, addItem }) => {

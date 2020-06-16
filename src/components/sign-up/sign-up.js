@@ -4,10 +4,10 @@ import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import "./sign-up.scss";
 import useForm from "../../hooks/useForm";
-import FormInput from "../form-input/form-input";
-import FormButton from "../form-button/form-button";
+import FormInput from "../form/form-input/form-input";
+import FormButton from "../form/form-button/form-button";
 import { auth, creatUserProfileDocument } from "../../firebase/firebase.utils";
-import ErrorMessage from "../error-message/error-message";
+import ErrorMessage from "../form/error-message/error-message";
 import { authStart, authError } from "../../redux/user/user-actions";
 import {
   selectCurrentUser,

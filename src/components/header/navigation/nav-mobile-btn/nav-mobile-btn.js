@@ -12,4 +12,4 @@ const MenuBtnMobile = (props) => (
   </div>
 );
 
-export default MenuBtnMobile;
+export default React.memo(MenuBtnMobile);
