@@ -11,6 +11,12 @@
     .header-block {
       text-transform: capitalize;
       width: 23%;
+      span {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: block;
+      }
 
       &:last-child {
         width: 8%;

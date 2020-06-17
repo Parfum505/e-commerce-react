@@ -7,3 +7,11 @@ export const addItem = (item) => ({
   type: actionTypes.ADD_ITEM,
   payload: item,
 });
+export const deleteItem = (item) => ({
+  type: actionTypes.DELETE_ITEM,
+  payload: item,
+});
+export const clearItem = (item) => ({
+  type: actionTypes.CLEAR_ITEM,
+  payload: item,
+});

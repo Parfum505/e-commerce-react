@@ -48,3 +48,16 @@ export const addItemToCart = (cartItems, itemToAdd) => {
   }
   return [...cartItems, { ...itemToAdd, quantity: 1 }];
 };
+export const deleteItemFromCart = (cartItems, itemToDelete) => {
+  if (itemToDelete.quantity === 1) {
+    return clearItemFromCart(cartItems, itemToDelete);
+  }
+  return cartItems.map((item) =>
+    item.id === itemToDelete.id
+      ? { ...item, quantity: item.quantity - 1 }
+      : item
+  );
+};
+export const clearItemFromCart = (cartItems, itemToClear) => {
+  return cartItems.filter((item) => item.id !== itemToClear.id);
+};
