@@ -6,6 +6,7 @@ import HomePage from "./pages/home/home";
 import ShopPage from "./pages/shop/shop";
 import Auth from "./pages/auth/auth";
 import Header from "./components/header/header";
+import CheckoutPage from "./pages/checkout/checkout";
 import { auth, creatUserProfileDocument } from "./firebase/firebase.utils";
 import { authSuccess, signOut } from "./redux/user/user-actions";
 
@@ -32,8 +33,9 @@ const App = (props) => {
       <Header />
       <Switch>
         <Route path="/" exact component={HomePage}></Route>
-        <Route path="/shop" exact component={ShopPage}></Route>
+        <Route path="/shop" component={ShopPage}></Route>
         <Route path="/sign-in" exact component={Auth}></Route>
+        <Route path="/checkout" exact component={CheckoutPage}></Route>
         <Redirect to="/" />
       </Switch>
     </div>
