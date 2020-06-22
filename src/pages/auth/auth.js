@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import { TransitionGroup } from "react-transition-group";
+import { CSSTransition } from "react-transition-group";
 import "./auth.scss";
 import SignIn from "../../components/sign-in/sign-in";
 import SignUp from "../../components/sign-up/sign-up";
 import FormButton from "../../components/form/form-button/form-button";
 import { signInFormInitData, signUpFormInitData } from "../../data/data";
 import { validateForm } from "../../utility/utility";
-import fadeHOC from "../../hoc/cssTransition";
 
 const Auth = () => {
   const [showSingUp, setShowSingUp] = useState(false);
@@ -16,21 +15,11 @@ const Auth = () => {
   };
   const transitionProps = {
     timeout: 300,
-    appear: false,
-    exit: true,
     classNames: "display",
+    exit: false,
     unmountOnExit: true,
   };
-  const SignUpWithTransition = fadeHOC({
-    ...transitionProps,
-    in: showSingUp,
-    key: 1,
-  })(SignUp);
-  const SignInWithTransition = fadeHOC({
-    ...transitionProps,
-    in: !showSingUp,
-    key: 2,
-  })(SignIn);
+
   return (
     <div className="pages auth-page">
       <FormButton
@@ -50,16 +39,12 @@ const Auth = () => {
         )}
         {}
       </FormButton>
-      <TransitionGroup component={null}>
-        <SignUpWithTransition
-          initFormData={signUpFormInitData}
-          validateForm={validateForm}
-        />
-        <SignInWithTransition
-          initFormData={signInFormInitData}
-          validateForm={validateForm}
-        />
-      </TransitionGroup>
+      <CSSTransition in={showSingUp} {...transitionProps}>
+        <SignUp initFormData={signUpFormInitData} validateForm={validateForm} />
+      </CSSTransition>
+      <CSSTransition in={!showSingUp} {...transitionProps}>
+        <SignIn initFormData={signInFormInitData} validateForm={validateForm} />
+      </CSSTransition>
     </div>
   );
 };

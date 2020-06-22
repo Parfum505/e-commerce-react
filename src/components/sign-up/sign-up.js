@@ -2,7 +2,6 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
-import "./sign-up.scss";
 import useForm from "../../hooks/useForm";
 import FormInput from "../form/form-input/form-input";
 import FormButton from "../form/form-button/form-button";

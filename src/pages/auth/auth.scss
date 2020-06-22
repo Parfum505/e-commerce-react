@@ -3,22 +3,17 @@
   .sign-form {
     width: 100%;
     max-width: 380px;
-    margin: auto;
     transition: all 0.3s ease-out;
     position: relative;
+    margin: auto;
 
     &.display-enter {
       opacity: 0;
-      transform: translateX(-10000px);
+      transform: translateX(-1000px);
     }
-    &.display-exit,
     &.display-enter-active {
       opacity: 1;
       transform: translateX(0);
-    }
-    &.display-exit-active {
-      opacity: 0;
-      transform: translateX(10000px);
     }
     .title,
     .subtitle {
