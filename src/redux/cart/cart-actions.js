@@ -15,3 +15,6 @@ export const clearItem = (item) => ({
   type: actionTypes.CLEAR_ITEM,
   payload: item,
 });
+export const clearAllItems = () => ({
+  type: actionTypes.CLEAR_ALL_ITEMS,
+});

@@ -11,7 +11,9 @@ import { selectCartItems } from "../../../redux/cart/cart-selectors";
 const CartDropdown = ({ cartItems, toggleCarHandler, history }) => {
   const clickedCheckout = () => {
     toggleCarHandler();
-    history.push("/checkout");
+    if (cartItems && cartItems.length) {
+      history.push("/checkout");
+    }
   };
   return (
     <div className="cart-dropdown">
@@ -22,7 +24,12 @@ const CartDropdown = ({ cartItems, toggleCarHandler, history }) => {
           <span className="empty-message">Your cart is empty</span>
         )}
       </div>
-      <FormButton handleClick={clickedCheckout}>GO TO CHECKOUT</FormButton>
+      <FormButton
+        classes={cartItems && cartItems.length ? [] : ['disabled']}
+        handleClick={clickedCheckout}
+      >
+        GO TO CHECKOUT
+      </FormButton>
     </div>
   );
 };

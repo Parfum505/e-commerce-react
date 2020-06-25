@@ -44,11 +44,12 @@
       border: none;
     }
   }
-
-  &:disabled,
+  &.disabled,
+  &.disabled:hover,
   &:disabled:hover {
     background-color: grey;
     color: white;
     border-color: grey;
+    cursor: not-allowed;
   }
 }
