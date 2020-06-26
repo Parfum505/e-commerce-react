@@ -2,12 +2,13 @@ import React from "react";
 import { Route } from "react-router-dom";
 import Collections from "../../components/collections/collections";
 import CollectionPage from "../collection/collection";
+import {PageContainer} from "../pages.styles";
 
 const ShopPage = ({ match }) => (
-  <div className="pages shop-page">
+  <PageContainer>
     <Route path={`${match.path}`} exact component={Collections} />
     <Route path={`${match.path}/:collectionId`} component={CollectionPage} />
-  </div>
+  </PageContainer>
 );
 
 export default ShopPage;

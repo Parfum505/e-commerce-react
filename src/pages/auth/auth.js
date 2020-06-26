@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { CSSTransition } from "react-transition-group";
-import "./auth.scss";
+import { AuthPageContainer, Label } from "./auth.styles";
 import SignIn from "../../components/sign-in/sign-in";
 import SignUp from "../../components/sign-up/sign-up";
 import FormButton from "../../components/form/form-button/form-button";
@@ -21,23 +21,21 @@ const Auth = () => {
   };
 
   return (
-    <div className="pages auth-page">
-      <FormButton
-        handleClick={switchModeHandler}
-        classes={["switch-signin-signup-button"]}
-      >
-        {showSingUp ? (
-          <div>
-            <span className="dissabled">SING&nbsp;IN</span>
-            &nbsp;/&nbsp;SING&nbsp;UP
-          </div>
-        ) : (
-          <div>
-            SING&nbsp;IN&nbsp;/&nbsp;
-            <span className="dissabled">SING&nbsp;UP</span>
-          </div>
-        )}
-        {}
+    <AuthPageContainer>
+      <FormButton handleClick={switchModeHandler}>
+        <Label>
+          {showSingUp ? (
+            <>
+              <span>SING&nbsp;IN</span>
+              &nbsp;/&nbsp;SING&nbsp;UP
+            </>
+          ) : (
+            <>
+              SING&nbsp;IN&nbsp;/&nbsp;
+              <span>SING&nbsp;UP</span>
+            </>
+          )}
+        </Label>
       </FormButton>
       <CSSTransition in={showSingUp} {...transitionProps}>
         <SignUp initFormData={signUpFormInitData} validateForm={validateForm} />
@@ -45,7 +43,7 @@ const Auth = () => {
       <CSSTransition in={!showSingUp} {...transitionProps}>
         <SignIn initFormData={signInFormInitData} validateForm={validateForm} />
       </CSSTransition>
-    </div>
+    </AuthPageContainer>
   );
 };
 

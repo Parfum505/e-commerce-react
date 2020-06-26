@@ -13,6 +13,7 @@ import {
   selectUserLoading,
   selectUserErrors,
 } from "../../redux/user/user-selectors";
+import { FormContainer, ButtonsContainer } from "../form/form.styles";
 
 const SignUp = ({
   initFormData,
@@ -52,10 +53,10 @@ const SignUp = ({
   };
 
   return (
-    <div className="sign-up sign-form">
+    <FormContainer>
       {currentUser ? <Redirect to="/" /> : null}
-      <h2 className="title">I do not have an account</h2>
-      <p className="subtitle">Sign up with your email end password.</p>
+      <h2>I do not have an account</h2>
+      <p>Sign up with your email end password.</p>
 
       <form action="" onSubmit={(e) => e.preventDefault()} noValidate>
         {Object.keys(values).map((name) => {
@@ -72,7 +73,7 @@ const SignUp = ({
             />
           );
         })}
-        <div className="buttons">
+        <ButtonsContainer>
           <FormButton
             type="submit"
             disabled={loading}
@@ -80,10 +81,10 @@ const SignUp = ({
           >
             SIGN UP
           </FormButton>
-        </div>
+        </ButtonsContainer>
       </form>
       <ErrorMessage message={authErrors || ""} />
-    </div>
+    </FormContainer>
   );
 };
 const mapStateToProps = createStructuredSelector({
