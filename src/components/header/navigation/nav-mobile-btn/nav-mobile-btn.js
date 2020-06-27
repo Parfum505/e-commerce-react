@@ -1,15 +1,15 @@
 import React from "react";
-import "./nav-mobile-btn.scss";
+import { MobileBtnsContainer } from "./nav-mobile-btn.styles";
 
 const MenuBtnMobile = (props) => (
-  <div
-    className={`menu-btn-mobile ${props.showMenu ? "active" : ""}`}
+  <MobileBtnsContainer
+    className={`${props.showMenu ? "active" : ""}`}
     onClick={props.clicked}
   >
-    <div className="btn-line"></div>
-    <div className="btn-line"></div>
-    <div className="btn-line"></div>
-  </div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </MobileBtnsContainer>
 );
 
 export default React.memo(MenuBtnMobile);

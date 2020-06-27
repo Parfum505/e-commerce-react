@@ -78,14 +78,14 @@ const SignIn = ({
           <FormButton
             type="submit"
             disabled={loading}
-            handleClick={handleClickSubmit}
+            onClick={handleClickSubmit}
           >
             SIGN IN
           </FormButton>
           <FormButton
             type="submit"
             disabled={loading}
-            handleClick={handleSignInWithGoogle}
+            onClick={handleSignInWithGoogle}
             classes={["google-sign-in"]}
           >
             SIGN IN WITH GOOGLE

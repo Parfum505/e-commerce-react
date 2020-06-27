@@ -1,6 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { Link } from "react-router-dom";
-import "./navigation.scss";
+import { NavTag, LogoContainer } from "./navigation.styles";
 import { ReactComponent as Logo } from "../../../assets/images/crown.svg";
 import NavLinks from "./nav-links/nav-links";
 import MenuBtnMobile from "./nav-mobile-btn/nav-mobile-btn";
@@ -13,13 +12,13 @@ const Navigation = () => {
   }, []);
 
   return (
-      <nav>
-        <Link to="/" className="logo-container">
-          <Logo className="logo" />
-        </Link>
-        <NavLinks clicked={toggleMobileMenu} showMenu={showMenu} />
-        <MenuBtnMobile clicked={toggleMobileMenu} showMenu={showMenu} />
-      </nav>
+    <NavTag>
+      <LogoContainer to="/">
+        <Logo />
+      </LogoContainer>
+      <NavLinks clicked={toggleMobileMenu} showMenu={showMenu} />
+      <MenuBtnMobile clicked={toggleMobileMenu} showMenu={showMenu} />
+    </NavTag>
   );
 };
 

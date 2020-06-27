@@ -11,6 +11,9 @@ export const authError = (error) => ({
   type: actionTypes.AUTH_ERROR,
   payload: error,
 });
+export const clearAuthError = () => ({
+  type: actionTypes.CLEAR_AUTH_ERROR,
+});
 export const signOut = () => ({
   type: actionTypes.AUTH_LOGOUT,
 });

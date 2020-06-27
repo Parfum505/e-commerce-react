@@ -25,8 +25,8 @@ const CartDropdown = ({ cartItems, toggleCarHandler, history }) => {
         )}
       </div>
       <FormButton
-        classes={cartItems && cartItems.length ? [] : ['disabled']}
-        handleClick={clickedCheckout}
+        classes={cartItems && cartItems.length ? [] : ["disabled"]}
+        onClick={clickedCheckout}
       >
         GO TO CHECKOUT
       </FormButton>

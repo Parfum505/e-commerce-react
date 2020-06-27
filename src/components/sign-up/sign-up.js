@@ -77,7 +77,7 @@ const SignUp = ({
           <FormButton
             type="submit"
             disabled={loading}
-            handleClick={handleClickSubmit}
+            onClick={handleClickSubmit}
           >
             SIGN UP
           </FormButton>

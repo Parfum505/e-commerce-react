@@ -1,4 +1,6 @@
-.custom-button {
+import styled from "styled-components";
+
+export const ButtonContainer = styled.button`
   min-width: 165px;
   width: auto;
   margin: 5px;
@@ -46,10 +48,11 @@
   }
   &.disabled,
   &.disabled:hover,
+  &:disabled,
   &:disabled:hover {
     background-color: grey;
     color: white;
     border-color: grey;
     cursor: not-allowed;
   }
-}
+`;

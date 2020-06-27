@@ -1,5 +1,5 @@
 import React from "react";
-import "./form-button.scss";
+import { ButtonContainer } from "./form-button.styles";
 
 const FormButton = ({ children, handleClick, ...otherProps }) => {
   let classesArr = ["custom-button"];
@@ -10,14 +10,12 @@ const FormButton = ({ children, handleClick, ...otherProps }) => {
       ? classesArr.concat(customClasses)
       : classesArr;
   return (
-    <button
+    <ButtonContainer
       className={classesArr.join(" ")}
-      onClick={handleClick}
-      disabled={otherProps.disabled}
       {...otherProps}
     >
       {children}
-    </button>
+    </ButtonContainer>
   );
 };
 

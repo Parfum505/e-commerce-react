@@ -30,6 +30,11 @@ const userReducer = (state = INITIAL_STATE, action) => {
         loading: false,
         errors: payload,
       };
+    case actionTypes.CLEAR_AUTH_ERROR:
+      return {
+        ...state,
+        errors: null,
+      };
     case actionTypes.AUTH_LOGOUT:
       return {
         ...state,

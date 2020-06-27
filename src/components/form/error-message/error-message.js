@@ -1,12 +1,7 @@
 import React from "react";
-import "./error-message.scss";
+import { MessageContainer } from "./error-message.styles";
 
-const ErrorMessage = ({ message }) => {
-  let errorMessage = null;
-  if (message) {
-    errorMessage = <span className="error-message">{message}</span>;
-  }
-  return errorMessage;
-};
+const ErrorMessage = ({ message }) =>
+  message ? <MessageContainer>{message}</MessageContainer> : null;
 
 export default React.memo(ErrorMessage);

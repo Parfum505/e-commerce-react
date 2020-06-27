@@ -14,7 +14,7 @@ const CollectionItem = ({ item, addItem }) => {
           backgroundImage: `url(${imageUrl})`,
         }}
       >
-        <FormButton classes="inverted" handleClick={(name) => addItem(item)}>
+        <FormButton classes="inverted" onClick={(name) => addItem(item)}>
           Add to cart
         </FormButton>
       </div>

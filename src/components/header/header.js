@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
-import "./header.scss";
+import { HeaderContainer, NavContainer } from "./header.styles";
 import CartIcon from "../cart/cart-icon/cart-icon";
 import CartDropdown from "../cart/cart-dropdown/cart-dropdown";
 import fadeHOC from "../../hoc/cssTransition";
@@ -20,13 +20,13 @@ const Header = ({ cartHidden }) => {
   const DropdownCart = fadeHOC(transitionProps)(CartDropdown);
 
   return (
-    <header className="header">
-      <div className="nav-container">
+    <HeaderContainer>
+      <NavContainer>
         <Navigation />
         <CartIcon />
         <DropdownCart />
-      </div>
-    </header>
+      </NavContainer>
+    </HeaderContainer>
   );
 };
 
