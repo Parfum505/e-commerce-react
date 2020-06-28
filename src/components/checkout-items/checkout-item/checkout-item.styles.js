@@ -1,4 +1,6 @@
-.checkout-item {
+import styled from "styled-components";
+
+export const CheckoutItemContainer = styled.div`
   width: 100%;
   display: flex;
   min-height: 100px;
@@ -11,7 +13,6 @@
     opacity: 0.01;
     transform: translate(-100px, 0);
   }
-
   &.move-enter-active {
     opacity: 1;
     transform: translate(0, 0);
@@ -28,37 +29,34 @@
     transform: translate(100px, 0);
     transition: all 500ms ease-in;
   }
-
-  .image-container {
-    width: 23%;
-    padding-right: 15px;
-
-    img {
-      width: 100%;
-      height: 100%;
-    }
-  }
   .name,
-  .quantity,
   .price {
     width: 23%;
   }
+`;
+export const ImagemContainer = styled.div`
+  width: 23%;
+  padding-right: 15px;
 
-  .quantity {
-    display: flex;
-    .arrow {
-      cursor: pointer;
-    }
-    .value {
-      margin: 0 10px;
-    }
+  img {
+    width: 100%;
+    height: 100%;
   }
-
-  .remove-button {
+`;
+export const QuantityContainer = styled.div`
+  display: flex;
+  width: 23%;
+  .arrow {
     cursor: pointer;
-    transition: all 0.3s ease-out;
-    &:hover {
-      transform: rotate(90deg);
-    }
   }
-}
+  .value {
+    margin: 0 10px;
+  }
+`;
+export const RemoveButtonContainer = styled.div`
+  cursor: pointer;
+  transition: all 0.3s ease-out;
+  &:hover {
+    transform: rotate(90deg);
+  }
+`;

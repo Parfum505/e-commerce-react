@@ -3,21 +3,21 @@ import { ReactComponent as ShopingIcon } from "../../../assets/images/shopping-b
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import { toggleCartHidden } from "../../../redux/cart/cart-actions";
-import "./cart-icon.scss";
+import { CartIconContaiter, ItemCountContaiter } from "./cart-icon.styles";
 import { selectCartItemsCount } from "../../../redux/cart/cart-selectors";
 
-const CartIcon = ({ toggleCarHandler, cartItemsSum }) => (
-  <div className="cart-icon" onClick={toggleCarHandler}>
+const CartIcon = ({ toggleCartHandler, cartItemsSum }) => (
+  <CartIconContaiter onClick={toggleCartHandler}>
     <ShopingIcon className="shopping-icon" />
-    <span className="item-count">{cartItemsSum}</span>
-  </div>
+    <ItemCountContaiter>{cartItemsSum}</ItemCountContaiter>
+  </CartIconContaiter>
 );
 
 const mapStateToProps = createStructuredSelector({
   cartItemsSum: selectCartItemsCount,
 });
 const mapDispatchToProps = (dispatch) => ({
-  toggleCarHandler: () => dispatch(toggleCartHidden()),
+  toggleCartHandler: () => dispatch(toggleCartHidden()),
 });
 export default React.memo(
   connect(mapStateToProps, mapDispatchToProps)(CartIcon)

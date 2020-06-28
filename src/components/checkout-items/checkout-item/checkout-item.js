@@ -1,7 +1,16 @@
 import React from "react";
-import "./checkout-item.scss";
+import {
+  CheckoutItemContainer,
+  ImagemContainer,
+  QuantityContainer,
+  RemoveButtonContainer,
+} from "./checkout-item.styles";
 import { connect } from "react-redux";
-import { deleteItem, addItem, clearItem } from "../../../redux/cart/cart-actions";
+import {
+  deleteItem,
+  addItem,
+  clearItem,
+} from "../../../redux/cart/cart-actions";
 
 const CheckoutItem = ({
   item,
@@ -9,12 +18,12 @@ const CheckoutItem = ({
   addItemHandler,
   clearItemHandler,
 }) => (
-  <div className="checkout-item">
-    <div className="image-container">
+  <CheckoutItemContainer>
+    <ImagemContainer>
       <img src={item.imageUrl} alt="item" />
-    </div>
+    </ImagemContainer>
     <div className="name">{item.name}</div>
-    <div className="quantity">
+    <QuantityContainer>
       <div className="arrow" onClick={() => deleteItemHandler(item)}>
         &#10094;
       </div>
@@ -22,14 +31,14 @@ const CheckoutItem = ({
       <div className="arrow" onClick={() => addItemHandler(item)}>
         &#10095;
       </div>
-    </div>
+    </QuantityContainer>
     <div className="price">${item.price}</div>
-    <div className="remove-button" onClick={() => clearItemHandler(item)}>
+    <RemoveButtonContainer onClick={() => clearItemHandler(item)}>
       <span role="img" aria-label="Remove">
         &#10060;
       </span>
-    </div>
-  </div>
+    </RemoveButtonContainer>
+  </CheckoutItemContainer>
 );
 
 const mapDispatchToProps = (dispatch) => ({

@@ -1,24 +1,26 @@
 import React from "react";
-import "./form-input.scss";
+import {
+  GroupContainer,
+  FormInputContainer,
+  FormLabelContainer,
+} from "./form-input.styles";
 import ErrorMessage from "../error-message/error-message";
 
 const FormInput = ({ handleChange, error, label, ...otherProps }) => {
   return (
-    <div className="group">
-      <input
-        className={`form-input ${error ? "error" : ""}`}
+    <GroupContainer>
+      <FormInputContainer
+        className={error ? "error" : ""}
         {...otherProps}
         onChange={handleChange}
       />
       {label ? (
-        <label
-          className={`${otherProps.value ? "shrink" : ""} form-input-label`}
-        >
+        <FormLabelContainer className={otherProps.value ? "shrink" : ""}>
           {label}
-        </label>
+        </FormLabelContainer>
       ) : null}
-      <ErrorMessage message={error} />
-    </div>
+      <ErrorMessage message={error} className="auth-form" />
+    </GroupContainer>
   );
 };
 
