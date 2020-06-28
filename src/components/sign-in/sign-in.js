@@ -45,11 +45,14 @@ const SignIn = ({
       handleSubmit();
     }
   };
-  const handleSignInWithGoogle = (e) => {
+  const handleSignInWithGoogle = async (e) => {
     e.preventDefault();
     if (!loading) {
       authStartHandler();
-      signInWithGoogle();
+      const signInError = await signInWithGoogle();
+      if (signInError) {
+        authErrorHandler(signInError.message);
+      }
     }
   };
 
