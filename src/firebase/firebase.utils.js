@@ -65,4 +65,19 @@ export const signInWithGoogle = async () => {
   return singInError;
 };
 
+export const convertCollectionsSnapshotToMap = (collections) => {
+  const transformdCollection = collections.docs.map((doc) => {
+    const { title, items } = doc.data();
+    return {
+      routeName: encodeURI(title.toLowerCase()),
+      id: doc.id,
+      title,
+      items,
+    };
+  });
+  return transformdCollection.reduce((accum, collection) => {
+    accum[collection.title.toLowerCase()] = collection;
+    return accum;
+  }, {});
+};
 export default firebase;
