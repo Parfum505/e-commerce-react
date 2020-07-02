@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Route } from "react-router-dom";
 import { connect } from "react-redux";
 import { updateCollections } from "../../redux/shop/shop-actions";
@@ -11,22 +11,41 @@ import {
   firestore,
   convertCollectionsSnapshotToMap,
 } from "../../firebase/firebase.utils";
+import WithSpinner from "../../hoc/with-spinner/with-spinner";
+
+const CollectionsWithSpinner = WithSpinner(Collections);
+const CollectionPageWithSpinner = WithSpinner(CollectionPage);
 
 const ShopPage = ({ match, collections, updateCollectionsHandler }) => {
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     if (!collections) {
       const collectionRef = firestore.collection("collections");
       collectionRef.onSnapshot((snapShot) => {
         const collectionsMap = convertCollectionsSnapshotToMap(snapShot);
         updateCollectionsHandler(collectionsMap);
+        setLoading(false);
       });
+    } else {
+      setLoading(false);
     }
   }, [collections, updateCollectionsHandler]);
 
   return (
     <PageContainer>
-      <Route path={`${match.path}`} exact component={Collections} />
-      <Route path={`${match.path}/:collectionId`} component={CollectionPage} />
+      <Route
+        path={`${match.path}`}
+        exact
+        render={(props) => (
+          <CollectionsWithSpinner isLoading={loading} {...props} />
+        )}
+      />
+      <Route
+        path={`${match.path}/:collectionId`}
+        render={(props) => (
+          <CollectionPageWithSpinner isLoading={loading} {...props} />
+        )}
+      />
     </PageContainer>
   );
 };
