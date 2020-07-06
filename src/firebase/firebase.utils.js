@@ -55,15 +55,7 @@ export const provider = new firebase.auth.GoogleAuthProvider();
 
 provider.setCustomParameters({ prompt: "select_account" });
 
-export const signInWithGoogle = async () => {
-  let singInError = null;
-  try {
-    await auth.signInWithPopup(provider);
-  } catch (error) {
-    singInError = error;
-  }
-  return singInError;
-};
+export const signInWithGoogle = () => auth.signInWithPopup(provider);
 
 export const convertCollectionsSnapshotToMap = (collections) => {
   const transformdCollection = collections.docs.map((doc) => {

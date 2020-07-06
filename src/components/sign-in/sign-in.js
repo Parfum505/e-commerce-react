@@ -49,9 +49,10 @@ const SignIn = ({
     e.preventDefault();
     if (!loading) {
       authStartHandler();
-      const signInError = await signInWithGoogle();
-      if (signInError) {
-        authErrorHandler(signInError.message);
+      try {
+        await signInWithGoogle();
+      } catch (error) {
+        authErrorHandler(error.message);
       }
     }
   };
