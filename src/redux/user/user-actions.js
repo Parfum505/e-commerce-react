@@ -1,7 +1,11 @@
 import * as actionTypes from "./user-action-types";
 
-export const authStart = () => ({
-  type: actionTypes.AUTH_START,
+export const googleAuthStart = () => ({
+  type: actionTypes.GOOGLE_AUTH_START,
+});
+export const emailAuthStart = (emailAndPassword) => ({
+  type: actionTypes.EMAIL_AUTH_START,
+  payload: emailAndPassword
 });
 export const authSuccess = (user) => ({
   type: actionTypes.AUTH_SUCCESS,

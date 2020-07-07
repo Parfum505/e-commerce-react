@@ -10,7 +10,8 @@ const userReducer = (state = INITIAL_STATE, action) => {
   const { type, payload } = action;
 
   switch (type) {
-    case actionTypes.AUTH_START:
+    case actionTypes.EMAIL_AUTH_START:
+    case actionTypes.GOOGLE_AUTH_START:
       return {
         ...state,
         loading: true,

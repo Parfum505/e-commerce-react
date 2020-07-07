@@ -2,12 +2,11 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
-import { auth, signInWithGoogle } from "../../firebase/firebase.utils";
 import useForm from "../../hooks/useForm";
 import FormInput from "../form/form-input/form-input";
 import FormButton from "../form/form-button/form-button";
 import ErrorMessage from "../form/error-message/error-message";
-import { authStart, authError } from "../../redux/user/user-actions";
+import { googleAuthStart, emailAuthStart } from "../../redux/user/user-actions";
 import {
   selectCurrentUser,
   selectUserLoading,
@@ -19,19 +18,14 @@ const SignIn = ({
   initFormData,
   validateForm,
   currentUser,
-  authStartHandler,
-  authErrorHandler,
   loading,
   authErrors,
+  googleAuthStartHandler,
+  emailAuthStartHandler,
 }) => {
-  const signInHandler = async (values) => {
-    authStartHandler();
+  const signInHandler = (values) => {
     const { email, password } = values;
-    try {
-      await auth.signInWithEmailAndPassword(email.value, password.value);
-    } catch (error) {
-      authErrorHandler(error.message);
-    }
+    emailAuthStartHandler({ email: email.value, password: password.value });
   };
   const { errors, values, handleSubmit, handleInputChange } = useForm(
     initFormData,
@@ -45,15 +39,10 @@ const SignIn = ({
       handleSubmit();
     }
   };
-  const handleSignInWithGoogle = async (e) => {
+  const handleSignInWithGoogle = (e) => {
     e.preventDefault();
     if (!loading) {
-      authStartHandler();
-      try {
-        await signInWithGoogle();
-      } catch (error) {
-        authErrorHandler(error.message);
-      }
+      googleAuthStartHandler();
     }
   };
 
@@ -87,7 +76,7 @@ const SignIn = ({
             SIGN IN
           </FormButton>
           <FormButton
-            type="submit"
+            type="button"
             disabled={loading}
             onClick={handleSignInWithGoogle}
             classes={["google-sign-in"]}
@@ -106,7 +95,8 @@ const mapStateToProps = createStructuredSelector({
   authErrors: selectUserErrors,
 });
 const mapDispatchToProps = (dispatch) => ({
-  authStartHandler: () => dispatch(authStart()),
-  authErrorHandler: (error) => dispatch(authError(error)),
+  googleAuthStartHandler: () => dispatch(googleAuthStart()),
+  emailAuthStartHandler: (emailAndPassword) =>
+    dispatch(emailAuthStart(emailAndPassword)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

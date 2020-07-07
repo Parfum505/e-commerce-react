@@ -7,7 +7,7 @@ import FormInput from "../form/form-input/form-input";
 import FormButton from "../form/form-button/form-button";
 import { auth, creatUserProfileDocument } from "../../firebase/firebase.utils";
 import ErrorMessage from "../form/error-message/error-message";
-import { authStart, authError } from "../../redux/user/user-actions";
+import { emailAuthStart, authError } from "../../redux/user/user-actions";
 import {
   selectCurrentUser,
   selectUserLoading,
@@ -93,7 +93,7 @@ const mapStateToProps = createStructuredSelector({
   authErrors: selectUserErrors,
 });
 const mapDispatchToProps = (dispatch) => ({
-  authStartHandler: () => dispatch(authStart()),
+  authStartHandler: () => dispatch(emailAuthStart()),
   authErrorHandler: (error) => dispatch(authError(error)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
